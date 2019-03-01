@@ -1,53 +1,60 @@
 package edu.mga.restapi.henrybooks.services;
 
 import edu.mga.restapi.henrybooks.model.Branch;
+import edu.mga.restapi.henrybooks.model.Inventory;
 import edu.mga.restapi.henrybooks.repositories.BranchRepository;
+import edu.mga.restapi.henrybooks.repositories.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class BranchService {
 
     @Autowired
-    BranchRepository BranchRepository;
+    BranchRepository branchRepository;
+
+    @Autowired
+    InventoryRepository inventoryRepository;
 
     public boolean addBranch(Branch Branch) {
-        System.out.println(BranchRepository.save(Branch));
+        System.out.println(branchRepository.save(Branch));
         return true;
     }
 
     @Transactional
     public boolean updateBranch(Branch Branch) {
-        Branch Branch1 = BranchRepository.findById(Branch.getId());
+        Branch Branch1 = branchRepository.findById(Branch.getId());
         if (null == Branch1)
             return false;
-        BranchRepository.save(Branch);
+        branchRepository.save(Branch);
         return true;
     }
 
     @Transactional
     public boolean deleteBranch(Integer id) {
-        Branch Branch = BranchRepository.findById(id);
+
+        List<Inventory> inventoryList = inventoryRepository.findByBranchId(id);
+        for (Inventory inventory : inventoryList)
+            inventoryRepository.delete(inventory);
+
+        Branch Branch = branchRepository.findById(id);
         if (null == Branch)
             return false;
 //        BranchList.remove(id);
-        BranchRepository.deleteById(id);
+        branchRepository.deleteById(id);
         return true;
     }
 
     public Branch getBranch(Integer id) {
 //        return BranchList.get(id);
-        return BranchRepository.findById(id);
+        return branchRepository.findById(id);
     }
 
     public List<Branch> getBranches() {
-        return BranchRepository.findAll();
+        return branchRepository.findAll();
     }
 
 

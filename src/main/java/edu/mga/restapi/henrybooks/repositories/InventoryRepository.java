@@ -14,4 +14,5 @@ public interface InventoryRepository extends CrudRepository<Inventory, Long> {
     void deleteById(Integer id);
     Inventory findByBookIdAndBranchId(Integer bookId, Integer branchId);
     List<Inventory> findByBranchId(Integer branchId);
+    List<Inventory> findByBookId(Integer bookId);
 }

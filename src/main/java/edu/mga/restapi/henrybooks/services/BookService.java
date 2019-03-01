@@ -1,8 +1,10 @@
 package edu.mga.restapi.henrybooks.services;
 
 import edu.mga.restapi.henrybooks.model.Book;
+import edu.mga.restapi.henrybooks.model.Inventory;
 import edu.mga.restapi.henrybooks.repositories.BookRepository;
 import edu.mga.restapi.henrybooks.repositories.BranchRepository;
+import edu.mga.restapi.henrybooks.repositories.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,9 @@ public class BookService {
 
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    InventoryRepository inventoryRepository;
 
     public boolean addBook(Book book) {
         System.out.println(bookRepository.save(book));
@@ -34,6 +39,11 @@ public class BookService {
 
     @Transactional
     public boolean deleteBook(Integer id) {
+
+        List<Inventory> inventoryList = inventoryRepository.findByBookId(id);
+        for (Inventory inventory : inventoryList)
+            inventoryRepository.delete(inventory);
+
         Book book = bookRepository.findById(id);
         if (null == book)
             return false;

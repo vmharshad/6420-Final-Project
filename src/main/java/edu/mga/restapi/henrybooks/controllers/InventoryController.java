@@ -24,7 +24,7 @@ public class InventoryController {
     }
 
     @GetMapping(value = "/inventories/branches/{branchId}", produces = "application/json")
-    public @ResponseBody List<Book> getInventoriesByBranch(@PathVariable Integer branchId) {
+    public @ResponseBody List<Inventory> getInventoriesByBranch(@PathVariable Integer branchId) {
         return inventoryService.getInventoriesByBranchId(branchId);
     }
 

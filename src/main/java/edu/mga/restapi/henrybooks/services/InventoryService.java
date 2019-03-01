@@ -83,20 +83,20 @@ public class InventoryService {
         return inventoryRepository.findAll();
     }
 
-    public List<Book> getInventoriesByBranchId(Integer branchId) {
+    public List<Inventory> getInventoriesByBranchId(Integer branchId) {
         System.out.println("Find all count = " + inventoryRepository.findAll().size());
         System.out.println("branchId = " + branchId);
         System.out.println("Find by branch id = " + inventoryRepository.findByBranchId(branchId));
 
         List<Inventory> inventories = inventoryRepository.findByBranchId(branchId);
-        List<Book> bookList= new ArrayList<>();
+//        List<Inventory> bookList= new ArrayList<>();
+//
+//        if (null != inventories)
+//            for (Inventory inventory : inventories) {
+//                bookList.add(inventory.getBook());
+//            }
 
-        if (null != inventories)
-            for (Inventory inventory : inventories) {
-                bookList.add(inventory.getBook());
-            }
-
-        return bookList;
+        return inventories;
     }
 
 }
